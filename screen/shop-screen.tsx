@@ -6,22 +6,29 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { constants } from "../style/constants";
 import { storageMonedasBalanceGet } from "../utils/moneyHandling";
 import { InventoryItem, storageInventoryGet, storageInventorySave } from "../utils/inventoryHandling";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../utils/store";
+import { asyncInitInventory, asyncSetInventory } from "../utils/slices/inventorySlices";
 
 
 const ShopScreen = () => {
 
-    const [inventory, setInventory] = useState<InventoryItem[]>([]);
+    // const [inventory, setInventory] = useState<InventoryItem[]>([]);
+
+    const {inventory, isLoading} = useSelector((state : RootState) => state.inventory)
+
+      const dispatch = useDispatch<AppDispatch>()
 
     useEffect(() => {
-    const getInventory = async () =>{
-        const inv = await storageInventoryGet()
-        if(inv){
-            setInventory(inv)
-        }
-    }
+    // const getInventory = async () =>{
+    //     const inv = await storageInventoryGet()
+    //     if(inv){
+    //         //setInventory(inv)
+            
+    //     }
+    // }
 
-    getInventory()
-    
+    dispatch(asyncInitInventory())    
 }, []);
 
 
@@ -61,8 +68,7 @@ const ShopScreen = () => {
                     }
                 )
                 console.log(newInventory)
-                storageInventorySave(newInventory)
-                setInventory(newInventory)
+                dispatch(asyncSetInventory(newInventory))
             }
             else{
                 var newInventory = []
@@ -71,8 +77,7 @@ const ShopScreen = () => {
                 else
                     newInventory = [ {item: item, amount : 1}]
                 console.log(newInventory)
-                setInventory(newInventory)
-                storageInventorySave(newInventory)
+                dispatch(asyncSetInventory(newInventory))
             }
 
         }else{
