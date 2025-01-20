@@ -1,20 +1,49 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import { Text } from "react-native";
+import HomeScreen from "./screen/home-screen";
+import LoginScreen from "./screen/login-screen";
+import CoinsCounterScreen from "./screen/coins-counter-screen";
+import { AntDesign, Entypo, FontAwesome5 } from "@expo/vector-icons";
+import ShopScreen from "./screen/shop-screen";
 
 export default function App() {
+  const RootTabs = createBottomTabNavigator();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <NavigationContainer>
+        <RootTabs.Navigator>
+          <RootTabs.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Entypo name="home" size={size} color={color} />
+              ),
+            }}
+          />
+          <RootTabs.Screen
+            name="Coins Counter"
+            component={CoinsCounterScreen}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <FontAwesome5 name="bitcoin" size={size} color={color} />
+              ),
+            }}
+          />
+          <RootTabs.Screen
+            name="Shop"
+            component={ShopScreen}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Entypo name="shop" size={size} color={color} />
+              ),
+            }}
+          />
+          
+        </RootTabs.Navigator>
+      </NavigationContainer>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
