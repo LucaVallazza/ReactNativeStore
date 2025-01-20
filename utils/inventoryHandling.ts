@@ -2,11 +2,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { constants } from "../style/constants";
 import { Alert } from "react-native";
 import { ShopItem } from "../data/shopItems";
+import { InventoryItem } from "./slices/inventorySlices";
 
-export interface InventoryItem {
-  item: ShopItem;
-  amount: number;
-}
+
 
 export const storageInventorySave = async (inventory: InventoryItem[]) => {
   console.log("storageinventorySave");
