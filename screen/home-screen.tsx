@@ -3,11 +3,17 @@ import { contadorStyles, shopStyle, styles } from "../style/globalStyling";
 import { useEffect, useState } from "react";
 import { InventoryItem, storageInventoryGet } from "../utils/inventoryHandling";
 import { storageMonedasBalanceGet } from "../utils/moneyHandling";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../utils/store";
+import { asyncInitInventory } from "../utils/slices/inventorySlices";
 
 const HomeScreen = () => {
 
     const [balance, setBalance] = useState(0);
-    const [inventory, setInventory] = useState<InventoryItem[]>([]);
+    const dispatch = useDispatch<AppDispatch>()
+    // const [inventory, setInventory] = useState<InventoryItem[]>([]);
+
+    const {inventory, isLoading} = useSelector((state : RootState) => state.inventory)
 
     useEffect(() => {
         const getBalance = async ()=>{
@@ -15,13 +21,15 @@ const HomeScreen = () => {
             setBalance(_balance)
         }
 
-        const getInventory = async () => {
-            const inv = await storageInventoryGet()
-            setInventory(inv)
-        }
+        // const getInventory = async () => {
+        //     const inv = await storageInventoryGet()
+        //     // setInventory(inv)
+        // }
 
-        getInventory()
+        // getInventory()
         getBalance()
+
+        dispatch(asyncInitInventory())
 
     }, []);
 
