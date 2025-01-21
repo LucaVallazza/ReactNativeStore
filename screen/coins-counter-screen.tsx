@@ -1,51 +1,35 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import {
-  Alert,
-  AppState,
   Button,
-  Dimensions,
-  InputAccessoryView,
-  StyleSheet,
   Text,
   TextInput,
   ToastAndroid,
   View,
 } from "react-native";
 import { contadorStyles, styles } from "../style/globalStyling";
-import { CircleDollarSign } from "lucide-react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { constants } from "../style/constants";
 import { storageMonedasSave } from "../utils/moneyHandling";
+import { asyncMoneyGet, asyncMoneySet } from "../utils/slices/moneySlice";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../utils/store";
+
 
 const CoinsCounterScreen = () => {
   // AppState.addEventListener(
   //   'change', appstate =>{ToastAndroid.show(appstate , ToastAndroid.SHORT)}
   // )
 
-  const [monedas, setMonedas] = useState<number>(0);
+  const dispatch = useDispatch<AppDispatch>()
+
+  const monedas = useSelector((state : RootState) => state.money.balance)
+
+  // const [monedas, setMonedas] = useState<number>(0);
   const [monto, setMonto] = useState<number>(0);
 
   useEffect(() => {
-
-    const setMonedasFromStorage = async () =>{
-      return AsyncStorage.getItem(constants.dataItemNames.money)
-      .then((moneyDataString) => {
-        if (moneyDataString !== null) {
-          const moneyData = JSON.parse(moneyDataString);
-          if (moneyData.balance)
-            setMonedas(moneyData.balance)
-        } else {
-          console.log("No data found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error retrieving balance", error);
-      });
-    }
-    
-    setMonedasFromStorage()
-
+    dispatch(asyncMoneyGet())
   }, []);
 
 
@@ -53,8 +37,7 @@ const CoinsCounterScreen = () => {
 
   const onButtonPress = () => {
     if (Number(monto)) {   
-      storageMonedasSave(monedas + Number(monto))
-      setMonedas(monedas + Number(monto));
+      dispatch(asyncMoneySet(monedas + Number(monto)));
       ToastAndroid.show(
         `Se han agregado ${monto} monedas!`,
         ToastAndroid.SHORT
@@ -101,7 +84,7 @@ const CoinsCounterScreen = () => {
         <Button
           title="Clear"
           onPress={() => {
-            setMonedas(0);
+            dispatch(asyncMoneySet(0));
             storageMonedasSave(0);
           }}
         />
