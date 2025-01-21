@@ -8,6 +8,7 @@ import { AntDesign, Entypo, FontAwesome5 } from "@expo/vector-icons";
 import ShopScreen from "./screen/shop-screen";
 import { Provider } from "react-redux";
 import { store } from "./utils/store";
+import Header from "./screen/components/header";
 
 export default function App() {
   const RootTabs = createBottomTabNavigator();
@@ -15,8 +16,8 @@ export default function App() {
   return (
     <>
       <Provider store={store}>
-        <NavigationContainer>
-          <RootTabs.Navigator>
+        <NavigationContainer >
+          <RootTabs.Navigator >
             <RootTabs.Screen
               name="Home"
               component={HomeScreen}
