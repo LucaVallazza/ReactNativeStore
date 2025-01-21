@@ -73,4 +73,4 @@ export const asyncInitInventory = createAsyncThunk(
 
 export const {setInventory} = inventorySlice.actions
 
-export default inventorySlice.reducer
+export const inventoryReducer = inventorySlice.reducer
