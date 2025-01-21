@@ -1,4 +1,4 @@
-import { Alert, Button, Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Alert, Button, Image, RootTagContext, ScrollView, StyleSheet, Text, View } from "react-native";
 import { contadorStyles, shopStyle, styles } from "../style/globalStyling";
 import { ShopItem, shopItems } from "../data/shopItems";
 import { useEffect, useState } from "react";
@@ -9,6 +9,7 @@ import { InventoryItem, storageInventoryGet, storageInventorySave } from "../uti
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../utils/store";
 import { asyncInitInventory, asyncSetInventory } from "../utils/slices/inventorySlices";
+import { asyncMoneyGet, asyncMoneySet } from "../utils/slices/moneySlice";
 
 
 const ShopScreen = () => {
@@ -16,44 +17,18 @@ const ShopScreen = () => {
     // const [inventory, setInventory] = useState<InventoryItem[]>([]);
 
     const {inventory, isLoading} = useSelector((state : RootState) => state.inventory)
+    const {balance} = useSelector((state : RootState) => state.money)
+    
 
-      const dispatch = useDispatch<AppDispatch>()
+    const dispatch = useDispatch<AppDispatch>()
 
     useEffect(() => {
-    // const getInventory = async () =>{
-    //     const inv = await storageInventoryGet()
-    //     if(inv){
-    //         //setInventory(inv)
-            
-    //     }
-    // }
 
+    dispatch(asyncMoneyGet())
     dispatch(asyncInitInventory())    
 }, []);
-
-
-    
-    //   const storageInventoryGet = () => {
-    //     AsyncStorage.getItem(constants.dataItemNames.inventory)
-    //       .then((_inventory) => {
-    //         if (_inventory !== null) {
-    //           const invData = JSON.parse(_inventory);
-    //             return invData
-    //         } else {
-    //           console.log("No data found");
-    //         }
-    //       })
-    //       .catch((error) => {
-    //         console.error("Error retrieving inventory", error);
-    //       });
-    //   };
-    
-
-
       const buyItem = async (item : ShopItem) => {
-
-        const balance = await storageMonedasBalanceGet()
-        
+       
         console.log(balance)
 
         if ( balance >= item.value){
@@ -68,6 +43,7 @@ const ShopScreen = () => {
                     }
                 )
                 console.log(newInventory)
+                dispatch(asyncMoneySet(balance - item.value))
                 dispatch(asyncSetInventory(newInventory))
             }
             else{

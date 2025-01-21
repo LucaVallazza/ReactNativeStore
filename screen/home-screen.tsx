@@ -6,29 +6,20 @@ import { storageMonedasBalanceGet } from "../utils/moneyHandling";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../utils/store";
 import { asyncInitInventory } from "../utils/slices/inventorySlices";
+import { asyncMoneyGet } from "../utils/slices/moneySlice";
 
 const HomeScreen = () => {
 
-    const [balance, setBalance] = useState(0);
     const dispatch = useDispatch<AppDispatch>()
     // const [inventory, setInventory] = useState<InventoryItem[]>([]);
 
     const {inventory, isLoading} = useSelector((state : RootState) => state.inventory)
 
+    const {balance} = useSelector((state : RootState) => state.money)
+
     useEffect(() => {
-        const getBalance = async ()=>{
-            const _balance = await storageMonedasBalanceGet()
-            setBalance(_balance)
-        }
 
-        // const getInventory = async () => {
-        //     const inv = await storageInventoryGet()
-        //     // setInventory(inv)
-        // }
-
-        // getInventory()
-        getBalance()
-
+        dispatch(asyncMoneyGet())
         dispatch(asyncInitInventory())
 
     }, []);
