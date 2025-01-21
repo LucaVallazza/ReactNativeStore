@@ -33,7 +33,6 @@ const ShopScreen = () => {
 
         if ( balance >= item.value){
             console.log(`Puede comprar ${item.name} a ${item.value}`)
-
             if(inventory.find(e => e.item.name == item.name)){
                 const newInventory = inventory.map(inventoryItem => {
                     if(inventoryItem.item.name === item.name)
@@ -42,7 +41,6 @@ const ShopScreen = () => {
                         return inventoryItem
                     }
                 )
-                console.log(newInventory)
                 dispatch(asyncMoneySet(balance - item.value))
                 dispatch(asyncSetInventory(newInventory))
             }
@@ -52,7 +50,7 @@ const ShopScreen = () => {
                     newInventory  = [...inventory, {item: item, amount : 1}]
                 else
                     newInventory = [ {item: item, amount : 1}]
-                console.log(newInventory)
+                dispatch(asyncMoneySet(balance - item.value))
                 dispatch(asyncSetInventory(newInventory))
             }
 
@@ -65,6 +63,24 @@ const ShopScreen = () => {
     
     return (
       <View style={[styles.container]}>
+                <View>
+        <View style={{ ...contadorStyles.saldoContainer }}>
+                <Text
+                  style={{
+                    borderRadius: 50,
+                    height: 20,
+                    width: 20,
+                    textAlign: "center",
+                    alignContent: "center",
+                    backgroundColor: "yellow",
+                    color: "black",
+                  }}
+                >
+                  $
+                </Text>
+                <Text style={{ color: "white" }}> {balance} </Text>
+              </View>
+        </View>
         <Text style={{ fontSize: 40 }}>Shop</Text>
         <ScrollView
           style={shopStyle.itemsContainer}
