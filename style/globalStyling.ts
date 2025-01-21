@@ -5,7 +5,6 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "slate",
     alignItems: "center",
-    justifyContent: "center",
   },
   button: {
     backgroundColor: "yellow",

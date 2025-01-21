@@ -53,9 +53,11 @@ const HomeScreen = () => {
           <Text style={{ color: "white" }}> {balance} </Text>
         </View>
       </View>
+      <View style={{display: 'flex', }}>
       <Text style={{ fontSize: 40 }}>
         My Items
-        {inventory.length != 0 ? (
+      </Text>
+      {inventory.length != 0 ? (
           <View>
             <Button
               title="Clear"
@@ -65,7 +67,7 @@ const HomeScreen = () => {
         ) : (
           ""
         )}
-      </Text>
+      </View>
       {inventory.length != 0 ? (
         <ScrollView
           style={shopStyle.itemsContainer}

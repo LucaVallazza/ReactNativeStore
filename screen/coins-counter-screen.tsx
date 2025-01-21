@@ -53,23 +53,26 @@ const CoinsCounterScreen = () => {
 
   return (
     <View style = {styles.container}>
-      <StatusBar style="auto" />
-      <View style={{ ...contadorStyles.saldoContainer }}>
-        <Text
-          style={{
-            borderRadius: 50,
-            height: 20,
-            width: 20,
-            textAlign: "center",
-            alignContent: "center",
-            backgroundColor: "yellow",
-            color: "black",
-          }}
-        >
-          $
-        </Text>
-        <Text style={{ color: "white" }}> {monedas} </Text>
+           <View>
+        <View style={{ ...contadorStyles.saldoContainer }}>
+          <Text
+            style={{
+              borderRadius: 50,
+              height: 20,
+              width: 20,
+              textAlign: "center",
+              alignContent: "center",
+              backgroundColor: "yellow",
+              color: "black",
+            }}
+          >
+            $
+          </Text>
+          <Text style={{ color: "white" }}> {monedas} </Text>
+        </View>
       </View>
+      <StatusBar style="auto" />
+     
       <View style={styles.forminput}>
         <Text>Add amount</Text>
         <TextInput
