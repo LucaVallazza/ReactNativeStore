@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import reducer from "./slices/inventorySlices";
+import { inventoryReducer } from "./slices/inventorySlices";
+import { moneyReducer } from "./slices/moneySlice";
 
 
 export const store = configureStore({
   reducer : {
-    inventory : reducer
+    inventory : inventoryReducer,
+    money: moneyReducer
   }
 })
 
