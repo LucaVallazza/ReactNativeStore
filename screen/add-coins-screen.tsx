@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../utils/store";
 
 
-const CoinsCounterScreen = () => {
+const AddCoinsScreen = () => {
   // AppState.addEventListener(
   //   'change', appstate =>{ToastAndroid.show(appstate , ToastAndroid.SHORT)}
   // )
@@ -98,4 +98,4 @@ const CoinsCounterScreen = () => {
   );
 };
 
-export default CoinsCounterScreen;
+export default AddCoinsScreen;

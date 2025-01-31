@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ShopItem } from "../../data/shopItems";
-import { InventoryItem, storageInventoryGet, storageInventorySave } from "../inventoryHandling";
+import { storageInventoryGet, storageInventorySave } from "../inventoryHandling";
 
 export interface InventoryItem {
   item: ShopItem;
@@ -31,7 +31,7 @@ const inventorySlice = createSlice({
     })
     .addCase(asyncSetInventory.fulfilled , (state, action) => {
       console.log(`asyncSetInventory fullfilled. Payload count : ${action.payload.length}`)
-      state.inventory = action.payload
+      state.inventory = action.payload;
       state. isLoading = false;
     })
     .addCase(asyncInitInventory.pending , (state ) =>{

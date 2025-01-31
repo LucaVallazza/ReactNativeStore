@@ -1,14 +1,11 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import { Text } from "react-native";
 import HomeScreen from "./screen/home-screen";
-import LoginScreen from "./screen/login-screen";
-import CoinsCounterScreen from "./screen/coins-counter-screen";
-import { AntDesign, Entypo, FontAwesome5 } from "@expo/vector-icons";
+import { Entypo, FontAwesome5 } from "@expo/vector-icons";
 import ShopScreen from "./screen/shop-screen";
 import { Provider } from "react-redux";
 import { store } from "./utils/store";
-import Header from "./screen/components/header";
+import AddCoinsScreen from "./screen/add-coins-screen";
 
 export default function App() {
   const RootTabs = createBottomTabNavigator();
@@ -28,8 +25,8 @@ export default function App() {
               }}
             />
             <RootTabs.Screen
-              name="Coins Counter"
-              component={CoinsCounterScreen}
+              name="Add Coins"
+              component={AddCoinsScreen}
               options={{
                 tabBarIcon: ({ color, size }) => (
                   <FontAwesome5 name="bitcoin" size={size} color={color} />
